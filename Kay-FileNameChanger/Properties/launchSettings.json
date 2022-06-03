@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Kay-FileNameChanger": {
+      "commandName": "Project",
+      "commandLineArgs": "\"G:\\Users\\LiamWard\\OneDrive - UNIFY Solutions Pty. Ltd\\Desktop\\StupidFileNames\" \r\n\"C:\\Users\\LiamWard\\OneDrive - UNIFY Solutions Pty. Ltd\\Desktop\\/LessStupidFileNames\"\r\n\".txt\""
+    }
+  }
+}
