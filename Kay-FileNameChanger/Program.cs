@@ -7,6 +7,8 @@ namespace Kay_FileNameChanger
     {
         static void Main(string[] args)
         {
+            //foo
+            //foo
 
             if (!ArgumentValidator.IsValidArgs(args))
             {
