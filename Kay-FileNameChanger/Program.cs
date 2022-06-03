@@ -19,47 +19,45 @@ namespace Kay_FileNameChanger
 
             var response = Console.ReadLine();
 
-            if (response.Contains('Y') && response != string.Empty) 
+            if (!response!.Contains('Y') || response == string.Empty) return;
+
+            try
             {
-                try
-                {
                     
-                    string startingDirectory = args[0];
-                    string finishedDirectory = args[1];
-                    string fileSearchExpression = args[2];
+                var startingDirectory = args[0];
+                var finishedDirectory = args[1];
+                var fileSearchExpression = args[2];
 
-                    var directoryResult = Directory.GetFiles(startingDirectory, $"*{fileSearchExpression}");
+                var directoryResult = Directory.GetFiles(startingDirectory, $"*{fileSearchExpression}");
 
-                    foreach (var file in directoryResult)
-                    {
-
-                        var uncleanName = Path.GetFileNameWithoutExtension(file);
-
-                        Regex nonAlphaWhitelist = new Regex("[^a-zA-Z0-9]");
-                        Regex removeExtraHypens = new Regex("-{2,}");
-                        var cleanName = nonAlphaWhitelist.Replace(uncleanName, "-").TrimStart('-').TrimEnd('-')
-                            .ToLower();
-
-                        cleanName = removeExtraHypens.Replace(cleanName, "-");
-
-                        Console.WriteLine("Old: " + uncleanName);
-                        Console.WriteLine("New: " + cleanName);
-
-                        if (File.Exists(finishedDirectory + '\\' + cleanName + ".txt"))
-                        {
-                            continue;
-                        }
-
-                        File.Copy(file, finishedDirectory +'\\'+ cleanName + ".txt");
-                    }
-                }
-                catch (Exception ex)
+                foreach (var file in directoryResult)
                 {
-                    Console.WriteLine("An error occurred, Try again or consult Wardy with error message");
-                    Console.WriteLine(ex.ToString());
+
+                    var uncleanName = Path.GetFileNameWithoutExtension(file);
+
+                    var nonAlphaWhitelist = new Regex("[^a-zA-Z0-9]");
+                    var removeExtraHypens = new Regex("-{2,}");
+                    var cleanName = nonAlphaWhitelist.Replace(uncleanName, "-").TrimStart('-').TrimEnd('-')
+                        .ToLower();
+
+                    cleanName = removeExtraHypens.Replace(cleanName, "-");
+
+                    Console.WriteLine("Old: " + uncleanName);
+                    Console.WriteLine("New: " + cleanName);
+
+                    if (File.Exists(finishedDirectory + '\\' + cleanName + args[2]))
+                    {
+                        continue;
+                    }
+
+                    File.Copy(file, finishedDirectory +'\\'+ cleanName + args[2]);
                 }
             }
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred, Try again or consult Wardy with error message");
+                Console.WriteLine(ex.ToString());
+            }
         }
     }
 }
